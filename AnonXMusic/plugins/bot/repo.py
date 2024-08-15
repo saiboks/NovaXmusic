@@ -4,7 +4,7 @@ from AnonXMusic import app
 from config import BOT_USERNAME
 
 start_txt = """
-❖ ʜᴇʏ , ᴛʜᴇʀᴇ ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ʏᴏᴜ  ♥︎\n\n● ɪғ ʏᴏᴜ ᴡᴀɴᴛ 𝐀𝐫𝐭𝐡𝐞𝐲 ♡゙, ʙᴏᴛ ʀᴇᴘᴏ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ʙᴜᴛᴛᴏɴ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ ᴍʏ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ.\n\n❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝐀𝐫𝐭𝐡𝐞𝐲 ♡゙ ᴍ ᴜ s ɪ ᴄ"""
+𖣐 ʜᴇʏ , ᴛʜᴇʀᴇ ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ʏᴏᴜ  ♥︎\n\n● ɪғ ʏᴏᴜ ᴡᴀɴᴛ ʟ ᴜ ᴄ ʏ • / ‹𝟹, ʙᴏᴛ ʀᴇᴘᴏ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ʙᴜᴛᴛᴏɴ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ ᴍʏ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ.\n\n𖣐 ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝐀𝐫𝐭𝐡𝐞𝐲 ♡゙ ᴍ ᴜ s ɪ ᴄ"""
 
 
 
@@ -13,8 +13,8 @@ start_txt = """
 async def start(_, msg):
     buttons = [
         [
-          InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url="https://t.me/bsbaaass"),
-          InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇ", url="https://t.me/babaaasaaa")
+          InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url="https://t.me/PhoenixXsupport"),
+          InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇ", url="https://t.me/nova_updats")
           ],
     ]
     
