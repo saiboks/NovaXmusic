@@ -37,7 +37,7 @@ LOGGER_ID = int(getenv("LOGGER_ID", "-1001929735324"))
 OWNER_ID = int(getenv("OWNER_ID", "6922271843"))
 
 #❖  Your heroku app name
-HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", playnova)
+HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", "playnova")
 
 #❖  Get it from http://dashboard.heroku.com/account
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", "HRKU-d205f121-9525-4265-90c5-475af8e8e546")
