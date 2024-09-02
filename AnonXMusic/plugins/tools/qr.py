@@ -42,7 +42,7 @@ def qr_handler(client, message: Message):
     if len(command_text) > 1:
         input_text = " ".join(command_text[1:])
         qr_image = generate_qr_code(input_text)
-        message.reply_photo(qr_image, caption="✦ ǫʀ ᴄᴏᴅᴇ sᴜᴄᴄᴇssғᴜʟʟʏ ɢᴇɴʀsᴛᴇᴅ ✦\n\n๏ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➠ ๛ɴ ʏ ᴋ ᴀ ᴀ ࿐ ", reply_markup=InlineKeyboardMarkup(EVAA),)
+        message.reply_photo(qr_image, caption="✦ ǫʀ ᴄᴏᴅᴇ sᴜᴄᴄᴇssғᴜʟʟʏ ɢᴇɴʀsᴛᴇᴅ ✦\n\n๏ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➠ ʟ ᴜ ᴄ ʏ • / ‹𝟹", reply_markup=InlineKeyboardMarkup(EVAA),)
 
     else:
         message.reply_text("✦ Please provide the text for the QR code after the command. Example usage ➠ /qr text")
