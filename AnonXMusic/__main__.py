@@ -1,7 +1,7 @@
 import asyncio
 import importlib
 
-from pyrogram import idle
+from pyrogram import idle, Client, filters
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -11,7 +11,23 @@ from AnonXMusic.misc import sudo
 from AnonXMusic.plugins import ALL_MODULES
 from AnonXMusic.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
+from AnonXMusic.utils.gban_approval import send_gban_request, handle_gban_approval  # GBan approval ka functionality import
 
+
+# SUDO_USERS ko config se load karna
+SUDO_USERS = [123456789, 987654321]  # Yahan apne sudo user IDs daal do
+
+# Global ban request command ko handle karna
+@app.on_message(filters.command("gban") & filters.user(SUDO_USERS))
+async def gban_command(client, message):
+    # Request ko admin ke pass bhejna
+    await send_gban_request(client, message)
+    await message.reply_text("Gban request sent to admins for approval!")
+
+# Callback query handle karna (approve/decline)
+@app.on_callback_query(filters.regex(r"^(approve_gban|decline_gban)_\d+$"))
+async def handle_callback_query(client, callback_query):
+    await handle_gban_approval(client, callback_query)
 
 async def init():
     if (
@@ -43,7 +59,7 @@ async def init():
         await Anony.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
     except NoActiveGroupCall:
         LOGGER("AnonXMusic").error(
-            "✦ Please turn on the videochat of your log group\channel.\n\n✦ Stopping Bot...💣"
+            "✦ Please turn on the videochat of your log group/channel.\n\n✦ Stopping Bot...💣"
         )
         exit()
     except:
