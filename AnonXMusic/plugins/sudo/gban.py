@@ -1,5 +1,4 @@
 import asyncio
-
 from pyrogram import filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
@@ -26,6 +25,7 @@ async def global_ban(client, message: Message, _):
     if not message.reply_to_message:
         if len(message.command) != 2:
             return await message.reply_text(_["general_1"])
+    
     user = await extract_user(message)
     if user.id == message.from_user.id:
         return await message.reply_text(_["gban_1"])
@@ -33,18 +33,39 @@ async def global_ban(client, message: Message, _):
         return await message.reply_text(_["gban_2"])
     elif user.id in SUDOERS:
         return await message.reply_text(_["gban_3"])
+
+    # Ask for approval or decline
+    approval_message = await message.reply_text(
+        f"Do you want to approve or decline the ban for {user.mention}? Reply with 'approve' or 'decline'."
+    )
+
+    def check_reply(reply):
+        return reply.from_user.id == message.from_user.id and reply.text.lower() in ["approve", "decline"]
+
+    try:
+        reply = await app.listen(message.chat.id, filters=check_reply, timeout=30)
+    except asyncio.TimeoutError:
+        return await approval_message.edit_text("You didn't reply in time. Ban action canceled.")
+
+    if reply.text.lower() == "decline":
+        return await approval_message.edit_text(f"Global ban for {user.mention} has been declined.")
+    
+    # Ban logic starts after approval
     is_gbanned = await is_banned_user(user.id)
     if is_gbanned:
         return await message.reply_text(_["gban_4"].format(user.mention))
     if user.id not in BANNED_USERS:
         BANNED_USERS.add(user.id)
+    
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
         served_chats.append(int(chat["chat_id"]))
+    
     time_expected = get_readable_time(len(served_chats))
     mystic = await message.reply_text(_["gban_5"].format(user.mention, time_expected))
     number_of_chats = 0
+    
     for chat_id in served_chats:
         try:
             await app.ban_chat_member(chat_id, user.id)
@@ -53,6 +74,7 @@ async def global_ban(client, message: Message, _):
             await asyncio.sleep(int(fw.value))
         except:
             continue
+    
     await add_banned_user(user.id)
     await message.reply_text(
         _["gban_6"].format(
@@ -74,19 +96,23 @@ async def global_un(client, message: Message, _):
     if not message.reply_to_message:
         if len(message.command) != 2:
             return await message.reply_text(_["general_1"])
+    
     user = await extract_user(message)
     is_gbanned = await is_banned_user(user.id)
     if not is_gbanned:
         return await message.reply_text(_["gban_7"].format(user.mention))
     if user.id in BANNED_USERS:
         BANNED_USERS.remove(user.id)
+    
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
         served_chats.append(int(chat["chat_id"]))
+    
     time_expected = get_readable_time(len(served_chats))
     mystic = await message.reply_text(_["gban_8"].format(user.mention, time_expected))
     number_of_chats = 0
+    
     for chat_id in served_chats:
         try:
             await app.unban_chat_member(chat_id, user.id)
@@ -95,6 +121,7 @@ async def global_un(client, message: Message, _):
             await asyncio.sleep(int(fw.value))
         except:
             continue
+    
     await remove_banned_user(user.id)
     await message.reply_text(_["gban_9"].format(user.mention, number_of_chats))
     await mystic.delete()
@@ -106,10 +133,12 @@ async def gbanned_list(client, message: Message, _):
     counts = await get_banned_count()
     if counts == 0:
         return await message.reply_text(_["gban_10"])
+    
     mystic = await message.reply_text(_["gban_11"])
     msg = _["gban_12"]
     count = 0
     users = await get_banned_users()
+    
     for user_id in users:
         count += 1
         try:
@@ -119,6 +148,7 @@ async def gbanned_list(client, message: Message, _):
         except Exception:
             msg += f"❖ {count} ➥ {user_id}\n"
             continue
+    
     if count == 0:
         return await mystic.edit_text(_["gban_10"])
     else:
