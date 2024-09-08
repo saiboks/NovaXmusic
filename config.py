@@ -44,7 +44,7 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY", "HRKU-d205f121-9525-4265-90c5-475af8e8
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/LucyXDbot/NovaXmusic",
+    "https://github.com/saiboks/NovaXmusic",
 )
 
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
